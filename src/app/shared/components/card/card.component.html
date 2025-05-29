@@ -1,16 +1,15 @@
 <div class="card">
   <div class="card-content">
-    <h3>Card Title 2</h3>
-    <p>Praesent commodo cursus magna</p>
+    <h3>{{ event.title }}</h3>
+    <p>{{ event.place }}</p>
   </div>
-  <img src="images/sample-image.jpg" alt="Card Image" />
+  <img [src]="event.image" alt="Card Image" />
   <div class="card-content">
-    <p><span>01/10/2015</span> - <span>30/10/2015</span></p>
     <p>
-      There are many variations of passages of Lorem Ipsum available, but the
-      majority have suffered alteration in some form, by injected humour, or
-      randomised words which don't look even slightly believable.
+      <span>{{ event.startDate | date : "dd/MM/yyyy" }}</span> -
+      <span>{{ event.endDate | date : "dd/MM/yyyy" }}</span>
     </p>
+    <p [innerHTML]="eventDescriptionSanitized"></p>
     <button>Comprar</button>
   </div>
 </div>

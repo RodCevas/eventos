@@ -1,11 +1,27 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  signal,
+} from '@angular/core';
+import { CardComponent } from '../../shared/components/card/card.component';
+import { EVENTS } from '../../core/data-events';
+import { Event } from '../../core/models/event';
 
 @Component({
   selector: 'app-cartelera',
   standalone: true,
-  imports: [],
+  imports: [CardComponent],
   templateUrl: './cartelera.component.html',
   styleUrl: './cartelera.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CarteleraComponent { }
+export class CarteleraComponent implements OnInit {
+  //events: Event[] = [];
+  events = signal<Event[]>([])
+
+  ngOnInit(): void {
+    //this.events = EVENTS;
+    this.events.set(EVENTS)
+  }
+}
