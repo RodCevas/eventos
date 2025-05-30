@@ -5,7 +5,7 @@ import {
   signal,
 } from '@angular/core';
 import { CardComponent } from '../../shared/components/card/card.component';
-import { EVENTS } from '../../core/data-events';
+import { EVENTS } from '../../core/data/data-events';
 import { Event } from '../../core/models/event';
 
 @Component({
