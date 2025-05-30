@@ -1,1 +1,13 @@
-<p>ficha-evento works!</p>,
+<div class="ficha">
+  <div class="sesiones">
+    <ul>
+      @for (session of event().sessions; track $index) {
+      <li>
+        <span>Fecha: {{ session.date | date : "dd/MM/yyyy" }}, Disponibilidad: {{ session.availability }}</span>
+        
+      </li>
+      }
+    </ul>
+  </div>
+  <div class="carrito">sss</div>
+</div>

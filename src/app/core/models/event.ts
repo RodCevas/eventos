@@ -1,4 +1,4 @@
-export interface Event {
+export interface EventData {
   id: string;
   title: string;
   subtitle: string;
@@ -7,4 +7,10 @@ export interface Event {
   startDate: string;
   endDate: string;
   description: string;
+  sessions?: Session[];
+}
+
+interface Session {
+  date: string;
+  availability: string;
 }
