@@ -7,11 +7,12 @@ import {
 import { Event } from '../../../core/models/event';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule ],
   templateUrl: './card.component.html',
   styleUrl: './card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
