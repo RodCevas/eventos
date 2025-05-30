@@ -3,9 +3,26 @@
     <ul>
       @for (session of event().sessions; track $index) {
       <li>
-        <span>Fecha: {{ session.date | date : "dd/MM/yyyy" }}, Disponibilidad: {{ session.availability }}</span>
-        
+        <span
+          >Fecha: {{ session.date | date : "dd/MM/yyyy" }}, Disponibilidad:
+          {{ session.availability }}</span
+        >
+        <div class="input-wrapper">
+          <button (click)="changeValue(-1, $index)">-</button>
+          <input
+            id="input_{{ $index }}"
+            type="number"
+            [(ngModel)]="value"
+            [min]="min"
+            [max]="max"
+            class="no-spinner"
+            readonly
+          />
+          <button (click)="changeValue(1, $index)">+</button>
+        </div>
       </li>
+      } @empty {
+      <li>EVENT INFO NOT FOUND.</li>
       }
     </ul>
   </div>
