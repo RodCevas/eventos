@@ -17,11 +17,10 @@ import { Event } from '../../core/models/event';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CarteleraComponent implements OnInit {
-  //events: Event[] = [];
-  events = signal<Event[]>([])
+  events = signal<Event[]>([]);
 
-  ngOnInit(): void {
-    //this.events = EVENTS;
-    this.events.set(EVENTS)
+  ngOnInit() {
+    const sortedEvents = EVENTS.sort((a, b) => Number(a.endDate) - Number(b.endDate));
+    this.events.set(sortedEvents);
   }
 }
