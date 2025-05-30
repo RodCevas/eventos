@@ -23,7 +23,7 @@
       font-size: 1.2rem;
       color: #007bff;
     }
-    .card-location {
+    h5 {
       color: #007bff;
     }
     p {
@@ -49,4 +49,10 @@
       }
     }
   }
+}
+
+@media (max-width: 768px) {
+  .card .card-description {
+      display: none;
+    }
 }
