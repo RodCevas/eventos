@@ -1,52 +1,55 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  signal,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { EVENTS } from '../../core/data/data-events';
-import { EventData } from '../../core/models/event';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { CartService } from '../../core/services/cart.service';
+import { Cart } from '../../core/models/cart';
 
 @Component({
   selector: 'app-ficha-evento',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule],
   templateUrl: './ficha-evento.component.html',
   styleUrl: './ficha-evento.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FichaEventoComponent {
-  value: number = 0;
-  min: number = 0;
-  max: number = 100;
+  eventId: string = '';
 
-  event = signal<EventData>({
-    id: '',
-    title: '',
-    subtitle: '',
-    image: '',
-    place: '',
-    startDate: '',
-    endDate: '',
-    description: '',
+  eventCart = signal<Cart>({
+    event: { id: '', title: '', subtitle: '', image: '' },
     sessions: [],
   });
-  constructor(private route: ActivatedRoute) {}
+
+  constructor(
+    private cartService: CartService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit() {
-    const eventId = this.route.snapshot.paramMap.get('id')!;
-    const filteredEvent = EVENTS.find((event) => event.id === eventId);
+    this.eventId = this.route.snapshot.paramMap.get('id')!;
+    this.getCartEvents();
+  }
+
+  getCartEvents() {
+    const filteredEvent = this.cartService
+      .getCart()
+      .find((event) => event.event.id === this.eventId);
     if (filteredEvent) {
-      this.event.set(filteredEvent);
+      this.eventCart.set(filteredEvent);
     }
   }
 
-  changeValue(delta: number, index: number): void {
-    const sessionRow = document.querySelector(
-      '#input_' + index
-    ) as HTMLInputElement;
-    console.log(index);
-    const newValue = this.value + delta;
-    if (newValue >= this.min && newValue <= this.max) {
-      this.value = newValue;
-    }
+  increase(sessionDate: string) {
+    this.cartService.addRemoveFromCart(this.eventId, sessionDate, 'increase');
+    this.getCartEvents();
+  }
+
+  decrease(sessionDate: string) {
+    this.cartService.addRemoveFromCart(this.eventId, sessionDate, 'decrease');
+    this.getCartEvents();
   }
 }

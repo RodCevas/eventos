@@ -7,10 +7,4 @@ export interface EventData {
   startDate: string;
   endDate: string;
   description: string;
-  sessions?: Session[];
-}
-
-interface Session {
-  date: string;
-  availability: string;
 }

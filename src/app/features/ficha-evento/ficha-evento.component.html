@@ -1,24 +1,24 @@
 <div class="ficha">
   <div class="sesiones">
     <ul>
-      @for (session of event().sessions; track $index) {
+      @for (session of eventCart().sessions; track $index) {
       <li>
         <span
           >Fecha: {{ session.date | date : "dd/MM/yyyy" }}, Disponibilidad:
           {{ session.availability }}</span
         >
         <div class="input-wrapper">
-          <button (click)="changeValue(-1, $index)">-</button>
+          <button (click)="decrease(session.date)">-</button>
           <input
             id="input_{{ $index }}"
             type="number"
-            [(ngModel)]="value"
-            [min]="min"
-            [max]="max"
+            value="{{ session.quantity ?? 0 }}"
+            min="0"
+            [max]="session.availability"
             class="no-spinner"
             readonly
           />
-          <button (click)="changeValue(1, $index)">+</button>
+          <button (click)="increase(session.date)">+</button>
         </div>
       </li>
       } @empty {

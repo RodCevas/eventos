@@ -5,8 +5,8 @@ import {
   signal,
 } from '@angular/core';
 import { CardComponent } from '../../shared/components/card/card.component';
-import { EVENTS } from '../../core/data/data-events';
 import { EventData } from '../../core/models/event';
+import { EventosService } from '../../core/services/events.service';
 
 @Component({
   selector: 'app-cartelera',
@@ -19,8 +19,12 @@ import { EventData } from '../../core/models/event';
 export class CarteleraComponent implements OnInit {
   events = signal<EventData[]>([]);
 
+  constructor(private eventosService: EventosService) {}
+
   ngOnInit() {
-    const sortedEvents = EVENTS.sort((a, b) => Number(a.endDate) - Number(b.endDate));
+    const sortedEvents = this.eventosService
+      .getEvents()
+      .sort((a, b) => Number(a.endDate) - Number(b.endDate));
     this.events.set(sortedEvents);
   }
 }
