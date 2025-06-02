@@ -12,7 +12,11 @@ export class CartService {
 
   constructor() {}
 
-  addRemoveFromCart(eventId: string, sessionDate: string, addRemove: string) {
+  addRemoveFromCart(
+    eventId: string,
+    sessionDate: string,
+    addRemoveDelete: string
+  ) {
     this.cart.update((prevCart) => {
       return prevCart.map((cart) => {
         if (cart.event.id !== eventId) return cart;
@@ -21,7 +25,7 @@ export class CartService {
           sessions: cart.sessions.map((session) => {
             if (session.date !== sessionDate) return session;
             if (
-              addRemove === 'increase' &&
+              addRemoveDelete === 'increase' &&
               parseInt(session.availability) > 0
             ) {
               return {
@@ -30,7 +34,7 @@ export class CartService {
                 quantity: (session.quantity ?? 0) + 1,
               };
             } else if (
-              addRemove === 'decrease' &&
+              addRemoveDelete === 'decrease' &&
               (session.quantity ?? 0) > 0
             ) {
               return {
@@ -38,12 +42,23 @@ export class CartService {
                 availability: String(parseInt(session.availability) + 1),
                 quantity: (session.quantity ?? 0) - 1,
               };
+            } else if (
+              addRemoveDelete === 'delete' &&
+              (session.quantity ?? 0) > 0
+            ) {
+              return {
+                date: session.date,
+                availability: String(
+                  parseInt(session.availability) + (session.quantity ?? 0)
+                ),
+                quantity: 0,
+              };
             } else {
               return session;
             }
           }),
         };
       });
-    });    
+    });
   }
 }
